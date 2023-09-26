@@ -10,12 +10,6 @@ class FirebaseAuthentication implements Authentication {
       : _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance;
 
   @override
-  String? getLoginUserUid() {
-    // TODO: implement getLoginUserUid
-    throw UnimplementedError();
-  }
-
-  @override
   Future<Result<String>> login(
       {required String email, required String password}) async {
     try {
@@ -28,15 +22,28 @@ class FirebaseAuthentication implements Authentication {
   }
 
   @override
-  Future<Result<void>> logout() {
-    // TODO: implement logout
-    throw UnimplementedError();
+  Future<Result<void>> logout() async {
+    await _firebaseAuth.signOut();
+
+    if (_firebaseAuth.currentUser == null) {
+      return const Result.success(null);
+    } else {
+      return const Result.failed("Logout failed");
+    }
   }
 
   @override
   Future<Result<String>> register(
-      {required String email, required String password}) {
-    // TODO: implement register
-    throw UnimplementedError();
+      {required String email, required String password}) async {
+    try {
+      var userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      return Result.success(userCredential.user!.uid);
+    } on firebase_auth.FirebaseAuthException catch (e) {
+      return Result.failed(e.message!);
+    }
   }
+
+  @override
+  String? getLoggedInUserId() => _firebaseAuth.currentUser?.uid;
 }

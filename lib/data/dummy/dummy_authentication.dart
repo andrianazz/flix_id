@@ -3,12 +3,6 @@ import 'package:flix_id/domain/entities/result.dart';
 
 class DummyAuthentication implements Authentication {
   @override
-  String? getLoginUserUid() {
-    // TODO: implement getLoginUserUid
-    throw UnimplementedError();
-  }
-
-  @override
   Future<Result<String>> login({
     required String email,
     required String password,
@@ -28,6 +22,12 @@ class DummyAuthentication implements Authentication {
   Future<Result<String>> register(
       {required String email, required String password}) {
     // TODO: implement register
+    throw UnimplementedError();
+  }
+
+  @override
+  String? getLoggedInUserId() {
+    // TODO: implement getLoggedInUserId
     throw UnimplementedError();
   }
 }
