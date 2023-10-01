@@ -1,3 +1,4 @@
+import 'package:flix_id/presentation/extensions/build_context_extensions.dart';
 import 'package:flix_id/presentation/providers/router/router_provider.dart';
 import 'package:flix_id/presentation/providers/user_data/user_data_provider.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,8 @@ class _MainPageState extends ConsumerState<MainPage> {
     ref.listen(userDataProvider, (previous, next) {
       if (previous != null && next is AsyncData && next.value == null) {
         ref.read(routerProvider).goNamed("login");
+      } else if (next is AsyncError) {
+        context.showSnackBar(next.error.toString());
       }
     });
 
