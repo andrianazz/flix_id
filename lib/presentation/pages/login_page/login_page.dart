@@ -84,7 +84,9 @@ class LoginPage extends ConsumerWidget {
                   children: [
                     const Text("Don't have an account? "),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        ref.read(routerProvider).goNamed("register");
+                      },
                       child: const Text(
                         "Regiter",
                         style: TextStyle(fontWeight: FontWeight.bold),
